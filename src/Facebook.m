@@ -311,7 +311,20 @@ static NSString* kSDKVersion = @"2";
     query = [url query];
   }
 
-  NSDictionary *params = [self parseURLParams:query];
+    NSDictionary *params = nil;
+    
+    @try
+    {
+        [self parseURLParams:query];
+    }
+    @catch (NSException *exception)
+    {
+        NSException *newException = [NSException exceptionWithName:exception.name
+                                                            reason:[exception.reason stringByAppendingString:url.absoluteString]
+                                                          userInfo:exception.userInfo];
+        @throw newException;
+    }
+    
   NSString *accessToken = [params valueForKey:@"access_token"];
 
   // If the URL doesn't contain the access token, an error has occurred.

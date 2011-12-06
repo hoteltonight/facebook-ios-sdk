@@ -315,7 +315,7 @@ static NSString* kSDKVersion = @"2";
     
     @try
     {
-        [self parseURLParams:query];
+        params = [self parseURLParams:query];
     }
     @catch (NSException *exception)
     {
